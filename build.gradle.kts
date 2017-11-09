@@ -30,6 +30,7 @@ configure<JUnitPlatformExtension> {
 dependencies {
     compile(kotlin("stdlib"))
     testCompile(kotlin("reflect"))
+    testCompile("org.junit.platform:junit-platform-runner:1.0.1")
     testCompile("org.jetbrains.spek:spek-api:1.1.5")
     testRuntime("org.jetbrains.spek:spek-junit-platform-engine:1.1.5")
     testCompile("com.winterbe:expekt:0.2.0")
