@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kdiff.iml" filepath="$PROJECT_DIR$/.idea/modules/kdiff.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kdiff_main.iml" filepath="$PROJECT_DIR$/.idea/modules/kdiff_main.iml" group="kdiff" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/kdiff_test.iml" filepath="$PROJECT_DIR$/.idea/modules/kdiff_test.iml" group="kdiff" />
+    </modules>
+  </component>
+</project>
