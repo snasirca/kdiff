@@ -23,5 +23,15 @@ object DifferSpek : Spek({
             expect(diffs.find { it.key == 2 }?.newValue).to.equal("c")
             expect(diffs.find { it.key == 3 }?.newValue).to.equal("d")
         }
+
+        it("ignores unchanged values in the diff") {
+            val oldCollection = listOf(Data(1, "a"))
+            val newCollection = listOf(Data(1, "a"))
+            val differ = Differ<Data, Int, String>({ it.key }, { it.value }, nullData)
+
+            val diffs = differ.diffChanges(oldCollection, newCollection)
+
+            expect(diffs).to.be.empty()
+        }
     }
 })
