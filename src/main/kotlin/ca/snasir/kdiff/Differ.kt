@@ -1,6 +1,6 @@
 package ca.snasir.kdiff
 
-class Differ<in T, out DiffKey, DiffValue>(
+class Differ<in T, DiffKey, DiffValue>(
     private val keyGetter: (it: T) -> DiffKey,
     private val valueGetter: (it: T) -> DiffValue,
     private val nullValue: DiffValue
@@ -9,24 +9,16 @@ class Differ<in T, out DiffKey, DiffValue>(
 
     fun diffChanges(oldCollection: Collection<T>, newCollection: Collection<T>): Collection<Change<DiffKey, DiffValue>> {
         oldCollection.forEach {
-            val key = keyGetter(it)
-            val value = valueGetter(it)
-            if (changes.containsKey(key)) {
-                changes[key]?.oldValue = value
-            } else {
-                changes.put(key, Change(key, oldValue = value, newValue = nullValue))
-            }
+            getChange(keyGetter(it)).oldValue = valueGetter(it)
         }
         newCollection.forEach {
-            val key = keyGetter(it)
-            val value = valueGetter(it)
-            if (changes.containsKey(key)) {
-                changes[key]?.newValue = value
-            } else {
-                changes.put(key, Change(key, oldValue = nullValue, newValue = value))
-            }
+            getChange(keyGetter(it)).newValue = valueGetter(it)
         }
 
         return changes.values.filter { it.isAChange() }
+    }
+
+    private fun getChange(key: DiffKey): Change<DiffKey, DiffValue> {
+        return changes.getOrPut(key, { Change(key, oldValue = nullValue, newValue = nullValue) })
     }
 }
