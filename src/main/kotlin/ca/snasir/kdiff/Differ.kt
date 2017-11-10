@@ -1,13 +1,15 @@
 package ca.snasir.kdiff
 
-class Differ<in T, DiffKey, DiffValue>(
-    private val keyGetter: (it: T) -> DiffKey,
-    private val valueGetter: (it: T) -> DiffValue,
-    private val nullValue: DiffValue
-) {
-    private val changes = HashMap<DiffKey, Change<DiffKey, DiffValue>>()
+typealias Changes<Key, Value> = Collection<Change<Key, Value>>
 
-    fun diffChanges(oldCollection: Collection<T>, newCollection: Collection<T>): Collection<Change<DiffKey, DiffValue>> {
+class Differ<in T, Key, Value>(
+    private val keyGetter: (it: T) -> Key,
+    private val valueGetter: (it: T) -> Value,
+    private val nullValue: Value
+) {
+    private val changes = HashMap<Key, Change<Key, Value>>()
+
+    fun diffChanges(oldCollection: Collection<T>, newCollection: Collection<T>): Changes<Key, Value> {
         oldCollection.forEach {
             getOrStartTrackingChange(keyGetter(it)).oldValue = valueGetter(it)
         }
@@ -18,7 +20,7 @@ class Differ<in T, DiffKey, DiffValue>(
         return changes.values.filter { it.isAChange() }
     }
 
-    private fun getOrStartTrackingChange(key: DiffKey): Change<DiffKey, DiffValue> {
+    private fun getOrStartTrackingChange(key: Key): Change<Key, Value> {
         return changes.getOrPut(key, { Change(key, oldValue = nullValue, newValue = nullValue) })
     }
 }
