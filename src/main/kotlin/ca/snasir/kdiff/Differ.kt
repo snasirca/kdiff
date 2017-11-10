@@ -2,7 +2,7 @@ package ca.snasir.kdiff
 
 typealias Changes<Key, Value> = Collection<Change<Key, Value>>
 
-class Differ<in T, Key, Value>(
+class Differ<in T, out Key, Value>(
     private val keyFor: (it: T) -> Key,
     private val valueFor: (it: T) -> Value,
     private val nullValue: Value
