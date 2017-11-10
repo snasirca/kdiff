@@ -15,13 +15,13 @@ object DifferSpek : Spek({
             val newCollection = listOf(Data(2, "c"), Data(3, "d"))
             val differ = Differ<Data, Int, String>({ it.key }, { it.value }, nullData)
 
-            val diff = differ.diffChanges(oldCollection, newCollection)
+            val diffs = differ.diffChanges(oldCollection, newCollection)
 
-            expect(diff).to.have.size(3)
-            expect(diff.find { it.key == 1 }?.oldValue).to.equal("a")
-            expect(diff.find { it.key == 2 }?.oldValue).to.equal("b")
-            expect(diff.find { it.key == 2 }?.newValue).to.equal("c")
-            expect(diff.find { it.key == 3 }?.newValue).to.equal("d")
+            expect(diffs).to.have.size(3)
+            expect(diffs.find { it.key == 1 }?.oldValue).to.equal("a")
+            expect(diffs.find { it.key == 2 }?.oldValue).to.equal("b")
+            expect(diffs.find { it.key == 2 }?.newValue).to.equal("c")
+            expect(diffs.find { it.key == 3 }?.newValue).to.equal("d")
         }
     }
 })
