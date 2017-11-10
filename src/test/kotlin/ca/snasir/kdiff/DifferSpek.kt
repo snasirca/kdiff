@@ -2,30 +2,26 @@ package ca.snasir.kdiff
 
 import com.winterbe.expekt.expect
 import org.jetbrains.spek.api.Spek
-import org.jetbrains.spek.api.dsl.describe
-import org.jetbrains.spek.api.dsl.it
-import org.jetbrains.spek.api.dsl.on
+import org.jetbrains.spek.api.dsl.*
 
-object DifferSpek: Spek({
-    describe("a calculator") {
-        on("addition") {
-            it("should return the result of adding the first number to the second number") {
-                val calculator = Differ()
+object DifferSpek : Spek({
+    data class Data(val key: Int, val value: String)
 
-                val sum = calculator.sum(2, 4)
+    val nullData = ""
 
-                expect(sum).to.equal(6)
-            }
-        }
+    describe("the differ") {
+        it("diffs an old and new collection of objects") {
+            val oldCollection = listOf(Data(1, "a"), Data(2, "b"))
+            val newCollection = listOf(Data(2, "c"), Data(3, "d"))
+            val differ = Differ<Data, Int, String>({ it.key }, { it.value }, nullData)
 
-        on("subtraction") {
-            it("should return the result of subtracting the second number from the first number") {
-                val calculator = Differ()
+            val diff = differ.diffChanges(oldCollection, newCollection)
 
-                val subtract = calculator.subtract(4, 2)
-
-                expect(subtract).to.equal(2)
-            }
+            expect(diff).to.have.size(3)
+            expect(diff.find { it.key == 1 }?.oldValue).to.equal("a")
+            expect(diff.find { it.key == 2 }?.oldValue).to.equal("b")
+            expect(diff.find { it.key == 2 }?.newValue).to.equal("c")
+            expect(diff.find { it.key == 3 }?.newValue).to.equal("d")
         }
     }
 })
