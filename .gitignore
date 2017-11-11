@@ -89,3 +89,4 @@ gradle-app.setting
 hs_err_pid*
 
 /.idea/inspectionProfiles/Project_Default.xml
+.envrc
