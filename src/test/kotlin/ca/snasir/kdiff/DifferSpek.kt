@@ -11,7 +11,7 @@ object DifferSpek : Spek({
         it("diffs an old and new collection of objects") {
             val oldCollection = listOf(Element(1, "a"), Element(2, "b"))
             val newCollection = listOf(Element(2, "c"), Element(3, "d"))
-            val differ = Differ({ it: Element -> Pair(it.someKey, it.someValue) })
+            val differ = Differ({ it: Element -> KeyValuePair(it.someKey, it.someValue) })
 
             val diffs = differ.diffChanges(oldCollection, newCollection)
 
@@ -25,7 +25,7 @@ object DifferSpek : Spek({
         it("ignores unchanged values in the diff") {
             val oldCollection = listOf(Element(999, "a"))
             val newCollection = listOf(Element(999, "a"))
-            val differ = Differ({ it: Element -> Pair(it.someKey, it.someValue) })
+            val differ = Differ({ it: Element -> KeyValuePair(it.someKey, it.someValue) })
 
             val diffs = differ.diffChanges(oldCollection, newCollection)
 

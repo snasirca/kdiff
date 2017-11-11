@@ -22,7 +22,7 @@ val oldCollection = listOf(Element(1, "a"), Element(2, "b"))
 val newCollection = listOf(Element(2, "c"), Element(3, "d"))
 
 // Instantiate the differ with a key-value extraction lambda
-val differ = Differ({ it: Element -> Pair(it.key, it.value) })
+val differ = Differ({ it: Element -> KeyValuePair(it.key, it.value) })
 
 // Run differ in O(n) time
 val diffs = differ.diffChanges(oldCollection, newCollection)
