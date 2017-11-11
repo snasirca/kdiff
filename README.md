@@ -18,11 +18,11 @@ The differ will take two collections, an old and new, and a couple of lambdas th
 import ca.snasir.kdiff
 
 // Input dataset
-val oldCollection = listOf(Data(1, "a"), Data(2, "b"))
-val newCollection = listOf(Data(2, "c"), Data(3, "d"))
+val oldCollection = listOf(Element(1, "a"), Element(2, "b"))
+val newCollection = listOf(Element(2, "c"), Element(3, "d"))
 
 // Instantiate the differ with the lambdas and null object
-val differ = Differ<Data, Int, String>({ it.key }, { it.value })
+val differ = Differ<Element, Int, String>({ it.key }, { it.value })
 
 // Run differ in O(n) time
 val diffs = differ.diffChanges(oldCollection, newCollection)

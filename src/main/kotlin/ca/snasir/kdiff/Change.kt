@@ -1,9 +1,9 @@
 package ca.snasir.kdiff
 
-data class Change<out DiffKey, DiffValue>(
-    val key: DiffKey,
-    var oldValue: DiffValue? = null,
-    var newValue: DiffValue? = null
+data class Change<out ElementKey, ElementValue>(
+    val key: ElementKey,
+    var oldValue: ElementValue? = null,
+    var newValue: ElementValue? = null
 ) {
     fun isAChange(): Boolean {
         return oldValue != newValue
