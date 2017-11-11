@@ -1,5 +1,7 @@
 # kdiff
 
+[ ![Download](https://api.bintray.com/packages/snasirca/kotlin/kdiff/images/download.svg) ](https://bintray.com/snasirca/kotlin/kdiff/_latestVersion)
+
 Simple *O(n)* diffing library
 
 This is a simple Kotlin library I built to try out the following tech stack:
