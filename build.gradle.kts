@@ -3,7 +3,11 @@ import org.junit.platform.gradle.plugin.JUnitPlatformExtension
 
 plugins {
     kotlin("jvm") version "1.1.51"
+    id("com.jfrog.bintray") version "1.8.0"
 }
+
+group = "ca.snasir"
+version = "0.1.0"
 
 buildscript {
     dependencies {
@@ -13,6 +17,7 @@ buildscript {
 
 apply {
     plugin("org.junit.platform.gradle.plugin")
+    from("groovy.gradle") // temporary until https://github.com/bintray/gradle-bintray-plugin/pull/194 is merged
 }
 
 configure<JUnitPlatformExtension> {
@@ -21,6 +26,10 @@ configure<JUnitPlatformExtension> {
             include("spek")
         }
     }
+}
+
+repositories {
+    jcenter()
 }
 
 dependencies {
@@ -34,8 +43,12 @@ dependencies {
     testCompile("com.winterbe:expekt:0.2.0")
 }
 
-repositories {
-    mavenCentral()
+// temporary until https://github.com/bintray/gradle-bintray-plugin/pull/194 is merged
+val bintrayPackage: groovy.lang.Closure<Any> by extra
+bintray {
+    user = System.getenv("BINTRAY_USER") // doesn't work
+    key = System.getenv("BINTRAY_KEY") // doesn't work
+    pkg(bintrayPackage)
 }
 
 fun JUnitPlatformExtension.filters(setup: FiltersExtension.() -> Unit) {
