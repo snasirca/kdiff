@@ -4,8 +4,7 @@ typealias Changes<Key, Value> = Collection<Change<Key, Value>>
 
 class Differ<in Element, out Key, Value>(
     private val keyFor: (it: Element) -> Key,
-    private val valueFor: (it: Element) -> Value,
-    private val nullValue: Value
+    private val valueFor: (it: Element) -> Value
 ) {
     private val changes = HashMap<Key, Change<Key, Value>>()
 
@@ -21,6 +20,6 @@ class Differ<in Element, out Key, Value>(
     }
 
     private fun getOrStartTrackingChange(key: Key): Change<Key, Value> {
-        return changes.getOrPut(key, { Change(key, oldValue = nullValue, newValue = nullValue) })
+        return changes.getOrPut(key, { Change(key) })
     }
 }

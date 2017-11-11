@@ -22,16 +22,10 @@ val oldCollection = listOf(Data(1, "a"), Data(2, "b"))
 val newCollection = listOf(Data(2, "c"), Data(3, "d"))
 
 // Instantiate the differ with the lambdas and null object
-val differ = Differ<Data, Int, String>({ it.key }, { it.value }, nullData)
+val differ = Differ<Data, Int, String>({ it.key }, { it.value })
 
 // Run differ in O(n) time
 val diffs = differ.diffChanges(oldCollection, newCollection)
 ```
 
 The resulting diffs will be of type `Changes<Int, String>`.
-
-## Nullability
-
-I'm also trying not to use any nulls inside the library code so upon instantiation of the differ, you have to specify
-what the null object for your data payload is. If you want, you can use `null` but that is up to you. You can use the
-null object pattern safely.

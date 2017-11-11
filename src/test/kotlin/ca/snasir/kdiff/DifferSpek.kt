@@ -7,13 +7,11 @@ import org.jetbrains.spek.api.dsl.*
 object DifferSpek : Spek({
     data class Data(val key: Int, val value: String)
 
-    val nullData = ""
-
     describe("the differ") {
         it("diffs an old and new collection of objects") {
             val oldCollection = listOf(Data(1, "a"), Data(2, "b"))
             val newCollection = listOf(Data(2, "c"), Data(3, "d"))
-            val differ = Differ<Data, Int, String>({ it.key }, { it.value }, nullData)
+            val differ = Differ<Data, Int, String>({ it.key }, { it.value })
 
             val diffs = differ.diffChanges(oldCollection, newCollection)
 
@@ -27,7 +25,7 @@ object DifferSpek : Spek({
         it("ignores unchanged values in the diff") {
             val oldCollection = listOf(Data(1, "a"))
             val newCollection = listOf(Data(1, "a"))
-            val differ = Differ<Data, Int, String>({ it.key }, { it.value }, nullData)
+            val differ = Differ<Data, Int, String>({ it.key }, { it.value })
 
             val diffs = differ.diffChanges(oldCollection, newCollection)
 
