@@ -3,17 +3,18 @@ package ca.snasir.kdiff
 typealias Changes<Key, Value> = Collection<Change<Key, Value>>
 
 class Differ<in Element, out Key, Value>(
-    private val keyFor: (it: Element) -> Key,
-    private val valueFor: (it: Element) -> Value
+    private val keyValuePairFor: (it: Element) -> Pair<Key, Value>
 ) {
     private val changes = HashMap<Key, Change<Key, Value>>()
 
     fun diffChanges(oldElements: Collection<Element>, newElements: Collection<Element>): Changes<Key, Value> {
         oldElements.forEach {
-            getOrStartTrackingChange(keyFor(it)).oldValue = valueFor(it)
+            val keyValuePair = keyValuePairFor(it)
+            getOrStartTrackingChange(keyValuePair.first).oldValue = keyValuePair.second
         }
         newElements.forEach {
-            getOrStartTrackingChange(keyFor(it)).newValue = valueFor(it)
+            val keyValuePair = keyValuePairFor(it)
+            getOrStartTrackingChange(keyValuePair.first).newValue = keyValuePair.second
         }
 
         return changes.values.filter { it.isAChange() }

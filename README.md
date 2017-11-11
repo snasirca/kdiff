@@ -8,9 +8,9 @@ This is a simple Kotlin library I built to try out the following tech stack:
 - Spek ([BDD](http://joshldavis.com/2013/05/27/difference-between-tdd-and-bdd/) style unit testing framework)
 - Expekt (expectation style assertions)
 
-The differ will take two collections, an old and new, and a couple of lambdas that:
-1. Specify how to extract a key to know which values in the collections are for the same data element / field
-2. Specify how to extract the value for each element in the collection
+The differ will take two collections, an old and new, and a lambda for extracting a `Pair` that:
+1. Represents a _key_ for determining which values in the collections are for the same data element / field
+2. Represents the _value_ for each element in the collection
 
 ## Example Usage:
 
@@ -21,8 +21,8 @@ import ca.snasir.kdiff
 val oldCollection = listOf(Element(1, "a"), Element(2, "b"))
 val newCollection = listOf(Element(2, "c"), Element(3, "d"))
 
-// Instantiate the differ with the lambdas and null object
-val differ = Differ<Element, Int, String>({ it.key }, { it.value })
+// Instantiate the differ with a key-value extraction lambda
+val differ = Differ({ it: Element -> Pair(it.key, it.value) })
 
 // Run differ in O(n) time
 val diffs = differ.diffChanges(oldCollection, newCollection)
