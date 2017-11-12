@@ -3,4 +3,8 @@ ext.bintrayPackage = { ->
     name = "kdiff"
     licenses = ["Apache-2.0"]
     vcsUrl = "https://github.com/snasirca/kdiff.git"
+    publish = true
+    configurations = ["archives"]
+    githubRepo = "snasirca/kdiff"
+    githubReleaseNotesFile = "README.md"
 }

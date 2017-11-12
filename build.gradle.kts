@@ -46,9 +46,20 @@ dependencies {
 // temporary until https://github.com/bintray/gradle-bintray-plugin/pull/194 is merged
 val bintrayPackage: groovy.lang.Closure<Any> by extra
 bintray {
-    user = System.getenv("BINTRAY_USER")
-    key = System.getenv("BINTRAY_KEY")
+    user = getConfig("bintrayUser")
+    key = getConfig("bintrayApiKey")
     pkg(bintrayPackage)
+}
+
+fun getConfig(key: String): String {
+    val config = when {
+        project.hasProperty(key) -> project.property(key).toString()
+        else -> {
+            val envVarKey = key.replace(Regex("(.)(\\p{Upper})"), "$1_$2").toUpperCase()
+            System.getenv(envVarKey)
+        }
+    }
+    return config ?: error("Config key \"$key\" was not found in project properties provided or environment variables.")
 }
 
 fun JUnitPlatformExtension.filters(setup: FiltersExtension.() -> Unit) {
