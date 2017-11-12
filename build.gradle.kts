@@ -46,8 +46,8 @@ dependencies {
 // temporary until https://github.com/bintray/gradle-bintray-plugin/pull/194 is merged
 val bintrayPackage: groovy.lang.Closure<Any> by extra
 bintray {
-    user = System.getenv("BINTRAY_USER") // doesn't work
-    key = System.getenv("BINTRAY_KEY") // doesn't work
+    user = System.getenv("BINTRAY_USER")
+    key = System.getenv("BINTRAY_KEY")
     pkg(bintrayPackage)
 }
 
